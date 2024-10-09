@@ -1,5 +1,5 @@
 /* eslint-disable prettier/prettier */
-import { Controller, Get, Post, Param, Body, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Param, Body, Delete, Query } from '@nestjs/common';
 import { UsersService } from '../../services/users/users.service';
 
 @Controller('users')
@@ -10,6 +10,15 @@ export class UsersController {
   @Get()
   findAll() {
     return this.usersService.findAll();
+  }
+
+  // Ruta para obtener usuarios paginados
+  @Get('paginated')
+  findPaginated(
+    @Query('page') page: number = 1,
+    @Query('limit') limit: number = 10
+  ) {
+    return this.usersService.findPaginated(page, limit);
   }
 
   // Ruta para obtener un usuario por ID
